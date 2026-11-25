@@ -108,13 +108,18 @@ def test_contacts_opps_tasks_notes_search_counts(client):
 
 def test_pages_and_theme(client, tmp_path, monkeypatch):
     home = client.get("/")
-    assert home.status_code == 200 and "Yoisho BD OS" in home.text
-    assert "/static/auth.js" in home.text            # sign-in runs first
+    assert home.status_code == 200 and "<title>Yoisho BD OS</title>" in home.text
+    assert "/static/auth.js" in home.text            # Sellbird's sign-in runs first
+    assert "/static/yoisho/mark.svg" in home.text
+    js = client.get("/static/app.js").text
+    bridge_at = js.index("window.yo = {}")
+    start_at = js.index(server.APP_START)
+    assert bridge_at < start_at                      # Pipeline exists before the first screen
+    assert "Yoisho BD OS" in js and "· Sellbird'" not in js
     css = client.get("/static/app.css").text
-    assert "Yoisho theme" in css and "--accent: #B9531D" in css
-    engine = client.get("/static/engine.html").text
-    assert "Yoisho BD OS: engine" in engine and 'class="yo-back"' in engine
-    assert client.get("/static/yoisho/app.js").status_code == 200
+    assert "Yoisho theme" in css and "--accent: #B9531D" in css and "backdrop-filter" in css
+    assert client.get("/static/engine.html").text == home.text   # old link still opens
+    assert client.get("/static/yoisho/bridge.js").status_code == 200
     assert client.get("/static/yoisho/..%2Fserver.py").status_code == 404
     assert client.get("/static/yoisho/missing.js").status_code == 404
     # Logo: 404 without a file, served from private/brand/ when present.
@@ -124,6 +129,15 @@ def test_pages_and_theme(client, tmp_path, monkeypatch):
     (tmp_path / "brand" / "logo.png").write_bytes(b"\x89PNG fake")
     r = client.get("/static/yoisho-logo")
     assert r.status_code == 200 and r.headers["content-type"] == "image/png"
+
+
+def test_bridge_falls_back_when_sellbird_moves_its_start_line(monkeypatch, tmp_path):
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "app.js").write_text("console.log('sellbird');\n")
+    monkeypatch.setattr(server, "_sellbird_web", lambda: web)
+    js = server.app_js()
+    assert js.startswith("console.log('sellbird');") and "window.yo = {}" in js
 
 
 def test_real_guard_refuses_data_without_token(tmp_path):
