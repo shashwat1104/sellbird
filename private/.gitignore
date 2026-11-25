@@ -1,0 +1,4 @@
+# Yoisho business data lives here on the server only. Nothing in this folder
+# except this file is ever committed: the repository is public.
+*
+!.gitignore
