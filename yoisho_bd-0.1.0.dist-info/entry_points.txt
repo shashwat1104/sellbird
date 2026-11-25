@@ -1,0 +1,2 @@
+[sellbird.extensions]
+yoisho = yoisho_bd.plugin:install
