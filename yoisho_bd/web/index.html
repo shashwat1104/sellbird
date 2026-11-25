@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="same-origin">
+<title>Yoisho BD OS</title>
+<!-- First, so the private link's token leaves the address bar before anything else runs. -->
+<script src="/static/auth.js"></script>
+<link rel="stylesheet" href="/static/yoisho/yoisho.css">
+<link rel="icon" href="/static/yoisho/mark.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#home" aria-label="Yoisho BD OS home">
+    <img class="brand-logo" src="/static/yoisho-logo" alt="Yoisho" onerror="this.remove();document.querySelector('.brand-word').hidden=false">
+    <span class="brand-word" hidden>Yoisho</span>
+    <span class="brand-os">BD OS</span>
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="#home" data-tab="home">Home</a>
+    <a href="#orgs" data-tab="orgs">Organizations</a>
+    <a href="#contacts" data-tab="contacts">Contacts</a>
+    <a href="#opps" data-tab="opps">Opportunities</a>
+    <a href="#tasks" data-tab="tasks">Tasks</a>
+  </nav>
+  <form class="search" role="search" onsubmit="return doSearch(event)">
+    <label class="sr" for="q">Search everything</label>
+    <input id="q" type="search" placeholder="Search organizations, people, opportunities, tasks" autocomplete="off">
+  </form>
+  <a class="engine-link" href="/static/engine.html" title="Sellbird's own screens: discovery, signals, sending (off), settings">Engine</a>
+</header>
+
+<main id="view" tabindex="-1" aria-live="polite"></main>
+
+<div id="modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="modal-title"></h2><button class="icon-btn" type="button" onclick="closeModal()" aria-label="Close">&times;</button></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script src="/static/yoisho/app.js"></script>
+</body>
+</html>

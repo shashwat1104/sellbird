@@ -1,0 +1,58 @@
+/* Yoisho theme for Sellbird's own screens (appended after Sellbird's app.css).
+   Brand: Yoisho orange and navy on warm off-white. Text colours meet WCAG AA:
+   white on --accent 4.9:1, --accent on --subtle 4.5:1. The logo orange
+   (#E8804A) is decoration only: it is too light for text. */
+
+:root {
+  --surface: #FFFFFF; --subtle: #FBF6F1; --hover: #FDF3EA; --chip: #F7EDE4;
+  --line: #EFE4DA; --line2: #E2D3C6; --field-edge: #8A8296;
+  --fg: #1D2543; --fg2: #4E5570; --fg3: #636880;
+  --accent: #B9531D; --accent-h: #9A4416; --on: #FFFFFF; --soft: #FDEBDF;
+  --accent-line: #F3C9AE; --chart-muted: #F4C3A3;
+  --active: #1F2A4D; --active-bg: #E8EBF3;
+  --note: #4E5570; --note-bg: #F7EDE4;
+  --track: #EFE4DA; --canvas: #F6EFE8;
+  --c1: #1F2A4D; --c2: #E0763C; --c3: #6B7F2A; --c4: #7A4E8C;
+  --dock-shadow: 0 0 0 1px rgb(29 37 67 / .08), 0 2px 4px rgb(29 37 67 / .08), 0 18px 40px -12px rgb(29 37 67 / .30);
+  --shadow-pop: 0 0 0 1px rgb(29 37 67 / .08), 0 16px 40px -12px rgb(29 37 67 / .25);
+}
+:root[data-theme='dark'] {
+  --surface: #141A2E; --subtle: #1A2139; --hover: #1F2742; --chip: #1F2742;
+  --line: #2A3354; --line2: #36406A; --field-edge: #7D82A0;
+  --fg: #F4EEE8; --fg2: #C6C2CE; --fg3: #9C9AAE;
+  --accent: #F2955E; --accent-h: #F7AE82; --on: #2A1406; --soft: #3A2418;
+  --accent-line: #5A3420; --chart-muted: #6A3F27;
+  --active: #F2955E; --active-bg: #3A2418;
+  --note: #C6C2CE; --note-bg: #1A2139;
+  --track: #2A3354; --canvas: #0F1424;
+  --c1: #AAB6E3; --c2: #F2955E; --c3: #B5C76A; --c4: #C7A0D8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface: #141A2E; --subtle: #1A2139; --hover: #1F2742; --chip: #1F2742;
+    --line: #2A3354; --line2: #36406A; --field-edge: #7D82A0;
+    --fg: #F4EEE8; --fg2: #C6C2CE; --fg3: #9C9AAE;
+    --accent: #F2955E; --accent-h: #F7AE82; --on: #2A1406; --soft: #3A2418;
+    --accent-line: #5A3420; --chart-muted: #6A3F27;
+    --active: #F2955E; --active-bg: #3A2418;
+    --note: #C6C2CE; --note-bg: #1A2139;
+    --track: #2A3354; --canvas: #0F1424;
+    --c1: #AAB6E3; --c2: #F2955E; --c3: #B5C76A; --c4: #C7A0D8;
+  }
+}
+
+/* The Yoisho logo in place of Sellbird's signature. Falls back to the word
+   "Yoisho" when no logo file is on the server. */
+.logo {
+  height: 30px; aspect-ratio: 4.3 / 1; -webkit-mask: none; mask: none;
+  background: url('/static/yoisho-logo') left center / contain no-repeat;
+}
+.logo::after { content: ""; }
+
+/* "Back to Yoisho BD OS" strip above Sellbird's screens. */
+.yo-back {
+  position: fixed; left: 16px; bottom: 22px; z-index: 50; padding: 10px 16px;
+  border-radius: 999px; background: #1F2A4D; color: #FFFFFF;
+  font: 600 0.8125rem/1.2 var(--sans); text-decoration: none; box-shadow: var(--shadow-pop);
+}
+.yo-back:hover { text-decoration: underline; }

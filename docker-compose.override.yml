@@ -1,0 +1,7 @@
+# Yoisho BD OS: Docker Compose reads this file automatically next to
+# docker-compose.yml. It changes one thing: the server runs the Yoisho app
+# (Sellbird's dashboard wrapped with Yoisho's screens) instead of the plain
+# dashboard. Same port, same loopback-only address, same private link.
+services:
+  sellbird:
+    command: ["yoisho-dashboard"]
